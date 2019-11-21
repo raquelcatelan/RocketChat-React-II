@@ -1,19 +1,48 @@
 import React from 'react' 
 import Formulario from './Formulário'
+import Sucesso from './Sucesso'
 import './style.css'
 
-function Contato () {
+class  Contato extends React.Component {
+    constructor (props){
+
+        super(props)
+        this.state = {
+            conteudo : 'formulario'
+        }
+    }
+
+    handleMudaConteudo = (proximaPagina) => {
+
+        this.setState({
+            conteudo: proximaPagina
+        })
+    }
+    render(){
+
+        return(
     
-    return(
-
-        <section className='contato'>
-
-            
-              <Formulario/>
-            
-        </section>
-
-    )
+            <section className='contato'>
+                {
+                    this.state.conteudo === 'formulario' &&
+                    <Formulario
+                    mudaConteudo = {this.handleMudaConteudo}
+                    
+                    />
+                }
+                {
+                    this.state.conteudo === 'sucesso' &&
+                    <Sucesso
+                    mudaConteudo = {this.handleMudaConteudo}
+                    /> 
+                }
+                
+                
+                
+            </section>
+    
+        )
+    }
 }
 
 

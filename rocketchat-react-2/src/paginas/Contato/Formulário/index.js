@@ -1,5 +1,6 @@
 import React from 'react'
-import  Grupo from './Grupo'
+import Grupo from './componentes/Grupo'
+import Botao from './componentes/Botao'
 
 
 class Formulario extends React.Component {
@@ -26,71 +27,105 @@ class Formulario extends React.Component {
         }
     }
 
-    handleChange = (nomeDoCampo, valorDoCampo, erroDoCampo = '') =>{
+    handleChange = (nomeDoCampo, valorDoCampo, erroDoCampo = '') => {
 
-       this.setState({
+        this.setState({
 
-        [nomeDoCampo]: {
-            valor: valorDoCampo,
-            erro: erroDoCampo
+            [nomeDoCampo]: {
+                valor: valorDoCampo,
+                erro: erroDoCampo
+            }
+
+        })
+    }
+
+    estaDesabilitado = () => {
+        return (
+            !this.state.nome.valor ||
+            this.state.nome.erro ||
+            !this.state.email.valor ||
+            this.state.email.erro ||
+            !this.state.pais.valor ||
+            this.state.pais.erro
+
+        )
+    }
+
+    handleSubmit = (evento) => {
+       
+        const novoContato = {
+            nome: this.state.nome.valor,
+            email:this.state.email.valor,
+            pais: this.state.pais.valor,
+            mensagem: this.state.mensagem.valor
         }
-
-       }) 
+        console.log(novoContato, 'enviou');
+        
     }
 
     render() {
-        console.log(this.state);
-        
+        const verificaBotao = this.estaDesabilitado()
+     
+
         return (
 
             <div className="pagina" >
                 <h2>Entre em contato conosco!</h2>
-                <form className="formulario" >
-                    
-                <Grupo erro={this.state.nome.erro} >
-                    <Grupo.Legenda htmlFor='nome' >Nome Completo: </Grupo.Legenda>
-                    <Grupo.CaixaTexto
-                        name="nome"
-                        placeholder="Digite seu nome"
-                        onChange={this.handleChange}
-                        minLength = {10}
-                        required
-                        type= "text"
-                    
-                    />
-                 </Grupo>        
-                 <Grupo erro={this.state.email.erro} >
-                    <Grupo.Legenda htmlFor='email' > E-mail: </Grupo.Legenda>
-                    <Grupo.CaixaTexto
-                        name="email"
-                        placeholder="Digite seu email"
-                        onChange={this.handleChange}
-                        required
-                        type="email"
-                    
-                    />
-                 </Grupo>  
-                 <Grupo erro={this.state.pais.erro} >
-                    <Grupo.Legenda htmlFor='pais' >País: </Grupo.Legenda>
-                    <Grupo.CaixaTexto
-                        name="pais"
-                        placeholder="Digite seu pais"
-                        onChange={this.handleChange}
-                        required
-                        type="text"
-                    
-                    />
-                 </Grupo> 
-                 <Grupo erro={this.state.mensagem.erro} >
-                    <Grupo.Legenda htmlFor='mensagem' >Mensagem: </Grupo.Legenda>
-                    <Grupo.CaixaTexto
-                        name="mensagem"
-                        placeholder="Digite seu mensagem"
-                        onChange={this.handleChange}
-                        type="text"
-                    
-                    />
-                 </Grupo>         
+                <form className="formulario"  id='form1'  onSubmit={this.handleSubmit} >
+
+                    <Grupo erro={this.state.nome.erro} >
+                        <Grupo.Legenda htmlFor='nome' >Nome Completo: </Grupo.Legenda>
+                        <Grupo.CaixaTexto
+                            name="nome"
+                            placeholder="Digite seu nome"
+                            onChange={this.handleChange}
+                            minLength={10}
+                            required
+                            type="text"
+
+                        />
+                    </Grupo>
+                    <Grupo erro={this.state.email.erro} >
+                        <Grupo.Legenda htmlFor='email' > E-mail: </Grupo.Legenda>
+                        <Grupo.CaixaTexto
+                            name="email"
+                            placeholder="Digite seu email"
+                            onChange={this.handleChange}
+                            required
+                            type="email"
+
+                        />
+                    </Grupo>
+                    <Grupo erro={this.state.pais.erro} >
+                        <Grupo.Legenda htmlFor='pais' >País: </Grupo.Legenda>
+                        <Grupo.CaixaTexto
+                            name="pais"
+                            placeholder="Digite seu pais"
+                            onChange={this.handleChange}
+                            required
+                            type="text"
+
+                        />
+                    </Grupo>
+                    <Grupo erro={this.state.mensagem.erro} >
+                        <Grupo.Legenda htmlFor='mensagem' >Mensagem: </Grupo.Legenda>
+                        <Grupo.CaixaTexto
+                            name="mensagem"
+                            placeholder="Digite seu mensagem"
+                            onChange={this.handleChange}
+                            type="text"
+
+                        />
+                    </Grupo>
+
+                    <Botao
+                        desabilitado={verificaBotao}
+                        mudaConteudo={this.props.mudaConteudo} 
+                        onSubmit={this.handleSubmit}
+                        pagina='sucesso' 
+                        type='submit'>
+                        Enviar
+                     </Botao>
                 </form>
 
             </div>
