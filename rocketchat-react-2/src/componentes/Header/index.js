@@ -3,9 +3,9 @@ import './style.css'
 
 function Header (props){
     return(
-<section  className='home-header'>
+<section  className={props.classeHeader}>
     <h1>
-        A era da comunicação intergalática!
+        {props.children}
     </h1>
 </section>
 

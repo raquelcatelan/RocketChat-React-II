@@ -7,7 +7,9 @@ function PaginaInicial (){
 
 
         <main>
-            <Header/>
+            <Header classeHeader='home-header' >
+                A era da comunicação intergalática!
+            </Header>
         </main>
     )
 }
